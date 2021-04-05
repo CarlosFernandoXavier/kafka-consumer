@@ -36,12 +36,6 @@ public class KafkaConfiguration {
         return factory;
     }
 
-    /*@Bean
-    public ConsumerFactory<String, Object> consumerAntiFraudModelFactory() {
-        return new DefaultKafkaConsumerFactory(consumerConfigs(),
-                new StringDeserializer(),
-                new CustomJsonDeserializer(AntifraudModel.class));
-    }*/
     @Bean
     public ConsumerFactory<String, Object> paymentConsumerFactory() {
         Map<String, Object> config = new HashMap<>();
