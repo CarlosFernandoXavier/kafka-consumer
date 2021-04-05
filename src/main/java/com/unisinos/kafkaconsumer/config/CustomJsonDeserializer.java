@@ -8,10 +8,4 @@ public class CustomJsonDeserializer extends JsonDeserializer {
         super(type, false);
         this.addTrustedPackages("*");
     }
-    /*
-    * public CustomJsonDeserializer(Class type) {
-        super(type, false);
-        this.addTrustedPackages("*");
-    }
-    * */
 }

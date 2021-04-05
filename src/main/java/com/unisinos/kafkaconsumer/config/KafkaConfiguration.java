@@ -43,7 +43,7 @@ public class KafkaConfiguration {
                 new CustomJsonDeserializer(AntifraudModel.class));
     }*/
     @Bean
-    public ConsumerFactory<String, String> paymentConsumerFactory() {
+    public ConsumerFactory<String, Object> paymentConsumerFactory() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
@@ -51,12 +51,14 @@ public class KafkaConfiguration {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        return new DefaultKafkaConsumerFactory<>(config);
+        return new DefaultKafkaConsumerFactory<>(config,
+                new StringDeserializer(),
+                new CustomJsonDeserializer(PaymentModel.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> paymentKafkaListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, Object> paymentKafkaListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(paymentConsumerFactory());
         return factory;
     }

@@ -14,18 +14,14 @@ public class Consumer {
     OrderService orderService;
 
     @KafkaListener(topics = "pagamento", groupId = "group_id", containerFactory = "paymentKafkaListenerFactory")
-    public void consume(String json) {
+    public void consume(PaymentModel paymentModel) {
         try {
-            var paymentModel = objectMapper.readValue(json, PaymentModel.class);
-
             var orderModel = orderService.findOrderModelById(paymentModel.getOrderId());
             orderModel.setStatus(paymentModel.getStatus());
-
             orderService.updateOrderModel(orderModel);
-            System.out.println("Consumed user: " + json);
+            System.out.println("Consumed paymentModel: " + paymentModel);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
