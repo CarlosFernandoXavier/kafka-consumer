@@ -53,7 +53,7 @@ public class KafkaConfiguration {
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         return new DefaultKafkaConsumerFactory<>(config,
                 new StringDeserializer(),
-                new CustomJsonDeserializer(PaymentModel.class));
+                new JsonDeserializer(PaymentModel.class, false));
     }
 
     @Bean
